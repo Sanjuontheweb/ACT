@@ -100,10 +100,6 @@ def MainExecution():
     SetAssistantStatus("Thinking..")
     Decision = FirstLayerDMM(Query)
 
-    print("")
-    print(f"Decision : {Decision}")
-    print("")
-
     G = any([i for i in Decision if i.startswith("general")])
     R = any([i for i in Decision if i.startswith("realtime")])
 
