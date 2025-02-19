@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Speech Recognition</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .start{
+            background-color: rgb(0, 174, 255);
+            position: absolute;
+            top: 50%;
+            left: 32%;
+            color: white;
+            font-size: 27px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .stop{
+            background-color: rgb(255, 0, 13);
+            position: absolute;
+            top: 50%;
+            left: 55%;
+            color: white;
+            font-size: 27px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="start" onclick="startRecognition()">Start Recognition</button>
+    <button id="end" onclick="stopRecognition()">Stop Recognition</button>
+    <p id="output"></p>
+    <script>
+        const output = document.getElementById('output');
+        let recognition;
+
+        function startRecognition() {
+            recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+            recognition.lang = 'en';
+            recognition.continuous = true;
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[event.results.length - 1][0].transcript;
+                output.textContent += transcript;
+            };
+
+            recognition.onend = function() {
+                recognition.start();
+            };
+            recognition.start();
+        }
+
+        function stopRecognition() {
+            recognition.stop();
+            output.innerHTML = "";
+        }
+    </script>
+</body>
+</html>
